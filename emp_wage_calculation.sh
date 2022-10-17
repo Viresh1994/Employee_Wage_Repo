@@ -12,28 +12,37 @@ perDaySalary=0
 totalWorkHours=0
 days=0
 
+function calculateWorkingHour() {
+	case $1 in
+		0)
+			workHours=0;
+			;;
+
+		1)
+			workHours=8;
+			;;
+		2)
+			workHours=4;
+			;;
+	esac;
+	echo $workHours;
+
+}
+
 while [[ $days -lt 20 || $totalWorkHours -lt 100 ]]
 do
-attendance=$((RANDOM%3))
-case $attendance in
-		0) echo "absent"
-					workHours=0;;
-		1) echo "Present"
-					workHours=8;;
-		2) echo "part time present"
-					workHours=4;;
-esac
+	wh=$(calculateWorkingHour $((RANDOM%3)))
+	totalWorkHours=$(($totalWorkHours+$wh))
 
 if [ $totalWorkHours -gt 100 ]
 then
 break
 fi
 
-totalWorkHours=$(($totalWorkHours+$workHours))
 perDaySalary=$(($workHours*$perHourSalary))
 totalSalary=$(($totalSalary+$perDaySalary))
 ((days++))
 done
-echo "Month earning="$totalSalary
-echo "Today earning="$(($workHours*$perHourSalary))
+echo "Month earning=" $totalSalary
+echo "Today earning=" $days
 echo "Total  hours=" $totalWorkHours
