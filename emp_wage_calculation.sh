@@ -6,12 +6,13 @@ perHourSalary=20
 fullDayHours=8
 partTimeHours=4
 
-attendance=$((RANDOM%2))
 workHours=0
 totalSalary=0
 perDaySalary=0
+totalWorkHours=0
+days=0
 
-for ((day=1; day<=20; day++))
+while [[ $days -lt 20 || $totalWorkHours -lt 100 ]]
 do
 attendance=$((RANDOM%3))
 case $attendance in
@@ -23,8 +24,16 @@ case $attendance in
 					workHours=4;;
 esac
 
-perDaySalary=$((workHours*$perHourSalary))
-totalSalary=$((totalSalary+$perDaySalary))
+if [ $totalWorkHours -gt 100 ]
+then
+break
+fi
+
+totalWorkHours=$(($totalWorkHours+$workHours))
+perDaySalary=$(($workHours*$perHourSalary))
+totalSalary=$(($totalSalary+$perDaySalary))
+((days++))
 done
 echo "Month earning="$totalSalary
 echo "Today earning="$(($workHours*$perHourSalary))
+echo "Total  hours=" $totalWorkHours
