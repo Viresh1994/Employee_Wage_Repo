@@ -2,7 +2,7 @@
 
 echo " Welcome to Employee Wage Computation"
 
-declare -a dailyWages
+declare -A dailyWages
 
 perHourSalary=20
 fullDayHours=8
@@ -49,4 +49,8 @@ done
 echo "Month earning=" $totalSalary
 echo "Total days=" $days
 echo "Today earning=" $totalWorkHours
-echo "Total  wages= ${dailyWages[@]}"
+
+for d in ${!dailyWages[@]}
+do
+echo "daily wages for $d is ${dailyWages[ $d ]}"
+done
